@@ -12,15 +12,15 @@ const getTags = async (username?: string): Promise<string[]> => {
   }
 
   const tags = await prisma.tag.groupBy({
-    where: {
-      articles: {
-        some: {
-          author: {
-            OR: queries,
-          },
-        },
-      },
-    },
+    // where: {
+    //   articles: {
+    //     some: {
+    //       author: {
+    //         OR: queries,
+    //       },
+    //     },
+    //   },
+    // },
     by: ['name'],
     orderBy: {
       _count: {
