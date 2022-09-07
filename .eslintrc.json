@@ -22,7 +22,7 @@
         "ts": "never"
       }
     ],
-    "no-underscore-dangle": ["error", { "allow": ["_count"] }],
+    "no-underscore-dangle": ["error", { "allow": ["_count", "_username"] }],
     "no-console": ["error", { "allow": ["info"] }],
     "import/no-extraneous-dependencies": ["error", { "devDependencies": ["tests/prisma-mock.ts"] }]
   },

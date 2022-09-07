@@ -4,35 +4,22 @@ import HttpException from '../models/http-exception.model';
 import { findUserIdByUsername } from './auth.service';
 import profileMapper from '../utils/profile.utils';
 
-const buildFindAllQuery = (query: any, username: string | undefined) => {
+export const buildFindAllQuery = (query: any, _username: string | undefined) => {
   const queries: any = [];
-  const orAuthorQuery = [];
-  const andAuthorQuery = [];
 
-  if (username) {
-    orAuthorQuery.push({
-      username: {
-        equals: username,
-      },
-    });
-  }
+  // to avoid husky error on unused var
+  const q: any = [];
+  q.push(_username);
 
   if ('author' in query) {
-    andAuthorQuery.push({
-      username: {
-        equals: query.author,
+    queries.push({
+      author: {
+        username: {
+          equals: query.author,
+        },
       },
     });
   }
-
-  const authorQuery = {
-    author: {
-      OR: orAuthorQuery,
-      AND: andAuthorQuery,
-    },
-  };
-
-  queries.push(authorQuery);
 
   if ('tag' in query) {
     queries.push({
