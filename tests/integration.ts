@@ -31,7 +31,7 @@ async function exerciseServices() {
   const feed = await getFeed(0, 10, 'rkaramc');
   console.log('\nfeed:');
   console.dir(feed, { depth: 1 });
-  console.dir(feed.articles[0].author.username, { depth: 2 });
+  console.dir(feed.articles[0]?.author.username, { depth: 2 });
 }
 
 exerciseServices();
