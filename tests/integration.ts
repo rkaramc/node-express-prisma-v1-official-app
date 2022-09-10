@@ -1,4 +1,4 @@
-import { getArticles, getFeed } from '../src/services/article.service';
+import { getArticles, getCommentsByArticle, getFeed } from '../src/services/article.service';
 import { findUserIdByUsername } from '../src/services/auth.service';
 import getTags from '../src/services/tag.service';
 
@@ -23,6 +23,10 @@ async function exerciseServices() {
   const articlesByFavoritedBy = await getArticles({ favorited: 'rkaramc' }, undefined);
   console.log('\narticles by favorited by:');
   console.dir(articlesByFavoritedBy, { depth: 1 });
+
+  const commentsByArticle = await getCommentsByArticle(articles.articles[0].slug, undefined);
+  console.log('\ncomments on article:');
+  console.dir(commentsByArticle, { depth: 0 });
 
   const user = await findUserIdByUsername('rkaramc');
   console.log('\nuser:');
