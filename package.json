@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "tsc",
     "test": "jest -i",
-    "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts dev",
+    "dev": "dotenv -e .env ts-node-dev --respawn --pretty --transpile-only src/index.ts dev",
     "start": "node dist/src/index.js",
     "prisma:migrate": "prisma migrate dev --skip-seed",
     "prisma:format": "prisma format",
@@ -55,6 +55,7 @@
     "@types/node": "^15.14.9",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
+    "dotenv-cli": "^6.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",

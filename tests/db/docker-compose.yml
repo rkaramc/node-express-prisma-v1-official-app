@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  realworld:
+    image: postgres:alpine
+    restart: always
+    container_name: test-db
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: realworld
+      POSTGRES_PASSWORD: realworld
+      POSTGRES_DB: tests
