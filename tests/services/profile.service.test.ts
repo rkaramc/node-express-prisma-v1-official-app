@@ -1,4 +1,3 @@
-import prismaMock from '../prisma-mock';
 import { followUser, getProfile, unfollowUser } from '../../src/services/profile.service';
 
 describe('ProfileService', () => {
@@ -7,20 +6,6 @@ describe('ProfileService', () => {
       // Given
       const username = 'RealWorld';
       const usernameAuth = 'Gerome';
-
-      const mockedResponse = {
-        id: 123,
-        username: 'RealWorld',
-        email: 'realworld@me',
-        password: '1234',
-        bio: null,
-        image: null,
-        token: '',
-        followedBy: [],
-      };
-
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(mockedResponse);
 
       // Then
       await expect(getProfile(username, usernameAuth)).resolves.toHaveProperty('following');
@@ -31,111 +16,48 @@ describe('ProfileService', () => {
       const username = 'RealWorld';
       const usernameAuth = 'Gerome';
 
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(null);
-
       // Then
       await expect(getProfile(username, usernameAuth)).rejects.toThrowError();
     });
   });
 
   describe('followUser', () => {
-    test('shoud return a following property', async () => {
+    test('should return a following property', async () => {
       // Given
-      const usernamePayload = 'AnotherUser';
-      const usernameAuth = 'RealWorld';
-
-      const mockedAuthUser = {
-        id: 123,
-        username: 'RealWorld',
-        email: 'realworld@me',
-        password: '1234',
-        bio: null,
-        image: null,
-        token: '',
-        followedBy: [],
-      };
-
-      const mockedResponse = {
-        id: 123,
-        username: 'AnotherUser',
-        email: 'another@me',
-        password: '1234',
-        bio: null,
-        image: null,
-        token: '',
-        followedBy: [],
-      };
-
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(mockedAuthUser);
-      prismaMock.user.update.mockResolvedValue(mockedResponse);
+      const usernamePayload = 'realworld1';
+      const usernameAuth = 'realworld2';
 
       // Then
-      await expect(followUser(usernamePayload, usernameAuth)).resolves.toHaveProperty('following');
+      expect(followUser(usernamePayload, usernameAuth)).resolves.toHaveProperty('following');
     });
 
-    test('shoud throw an error if no user is found', async () => {
+    test('should throw an error if no user is found', async () => {
       // Given
-      const usernamePayload = 'AnotherUser';
-      const usernameAuth = 'RealWorld';
-
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(null);
+      const usernamePayload = 'realworldx';
+      const usernameAuth = 'realworld2';
 
       // Then
-      await expect(followUser(usernamePayload, usernameAuth)).rejects.toThrowError();
+      expect(followUser(usernamePayload, usernameAuth)).rejects.toThrowError();
     });
   });
 
   describe('unfollowUser', () => {
-    test('shoud return a following property', async () => {
+    test('should return a following property', async () => {
       // Given
-      const usernamePayload = 'AnotherUser';
-      const usernameAuth = 'RealWorld';
-
-      const mockedAuthUser = {
-        id: 123,
-        username: 'RealWorld',
-        email: 'realworld@me',
-        password: '1234',
-        bio: null,
-        image: null,
-        token: '',
-        followedBy: [],
-      };
-
-      const mockedResponse = {
-        id: 123,
-        username: 'AnotherUser',
-        email: 'another@me',
-        password: '1234',
-        bio: null,
-        image: null,
-        token: '',
-        followedBy: [],
-      };
-
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(mockedAuthUser);
-      prismaMock.user.update.mockResolvedValue(mockedResponse);
+      const usernamePayload = 'realworld1';
+      const usernameAuth = 'realworld2';
 
       // Then
-      await expect(unfollowUser(usernamePayload, usernameAuth)).resolves.toHaveProperty(
-        'following',
-      );
+      expect(unfollowUser(usernamePayload, usernameAuth)).resolves.toHaveProperty('following');
     });
 
-    test('shoud throw an error if no user is found', async () => {
+    test('should throw an error if no user is found', async () => {
       // Given
-      const usernamePayload = 'AnotherUser';
-      const usernameAuth = 'RealWorld';
-
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(null);
+      const usernamePayload = 'realworldx';
+      const usernameAuth = 'realworld2';
 
       // Then
-      await expect(unfollowUser(usernamePayload, usernameAuth)).rejects.toThrowError();
+      expect(unfollowUser(usernamePayload, usernameAuth)).rejects.toThrowError();
     });
   });
 });

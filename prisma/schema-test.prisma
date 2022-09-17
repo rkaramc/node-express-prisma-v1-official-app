@@ -3,8 +3,8 @@
 
 datasource test {
   provider = "sqlite"
-  // url      = env("DATABASE_URL")
-  url      = "file:../tests/db/api-test.sqlite"
+  url      = env("DATABASE_URL")
+  // url      = "file:../tests/db/api-test.sqlite"
 }
 
 generator client {

@@ -30,7 +30,7 @@ const getTags = async (username?: string): Promise<string[]> => {
     take: 10,
   });
 
-  return tags.map(tag => tag.name);
+  return tags?.map(tag => tag.name) || [];
 };
 
 export default getTags;

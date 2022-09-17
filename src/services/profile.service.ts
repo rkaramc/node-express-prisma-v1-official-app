@@ -8,7 +8,8 @@ export const getProfile = async (usernamePayload: string, usernameAuth: string) 
     where: {
       username: usernamePayload,
     },
-    include: {
+    select: {
+      username: true,
       followedBy: true,
     },
   });
@@ -21,7 +22,7 @@ export const getProfile = async (usernamePayload: string, usernameAuth: string) 
 };
 
 export const followUser = async (usernamePayload: string, usernameAuth: string) => {
-  const { id } = await findUserIdByUsername(usernameAuth);
+  const id = (await findUserIdByUsername(usernameAuth))?.id;
 
   const profile = await prisma.user.update({
     where: {
@@ -34,7 +35,8 @@ export const followUser = async (usernamePayload: string, usernameAuth: string) 
         },
       },
     },
-    include: {
+    select: {
+      username: true,
       followedBy: true,
     },
   });
@@ -43,7 +45,7 @@ export const followUser = async (usernamePayload: string, usernameAuth: string) 
 };
 
 export const unfollowUser = async (usernamePayload: string, usernameAuth: string) => {
-  const { id } = await findUserIdByUsername(usernameAuth);
+  const id = (await findUserIdByUsername(usernameAuth))?.id;
 
   const profile = await prisma.user.update({
     where: {
@@ -56,7 +58,8 @@ export const unfollowUser = async (usernamePayload: string, usernameAuth: string
         },
       },
     },
-    include: {
+    select: {
+      username: true,
       followedBy: true,
     },
   });

@@ -85,14 +85,14 @@ export const getArticles = async (query: any, username?: string) => {
   });
 
   return {
-    articles: articles.map(({ authorId, id, _count, favoritedBy, ...article }) => ({
+    articles: articles?.map(({ authorId, id, _count, favoritedBy, ...article }) => ({
       ...article,
       author: profileMapper(article.author, username),
       tagList: article.tagList.map(tag => tag.name),
       favoritesCount: _count?.favoritedBy,
       favorited: favoritedBy.some(item => item.username === username),
     })),
-    articlesCount,
+    articlesCount: articlesCount || 0,
   };
 };
 
@@ -142,14 +142,14 @@ export const getFeed = async (offset: number, limit: number, username: string) =
   });
 
   return {
-    articles: articles.map(({ authorId, id, _count, favoritedBy, ...article }) => ({
+    articles: articles?.map(({ authorId, id, _count, favoritedBy, ...article }) => ({
       ...article,
       author: profileMapper(article.author, username),
       tagList: article.tagList.map(tag => tag.name),
       favoritesCount: _count?.favoritedBy,
       favorited: favoritedBy.some(item => item.username === username),
     })),
-    articlesCount,
+    articlesCount: articlesCount || 0,
   };
 };
 

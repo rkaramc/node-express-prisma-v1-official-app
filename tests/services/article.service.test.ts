@@ -1,9 +1,9 @@
-import prismaMock from '../prisma-mock';
 import {
   deleteComment,
   favoriteArticle,
   unfavoriteArticle,
 } from '../../src/services/article.service';
+import { apiTestData } from '../prisma-test-data';
 
 describe('ArticleService', () => {
   describe('deleteComment', () => {
@@ -12,64 +12,28 @@ describe('ArticleService', () => {
       const id = 123;
       const username = 'RealWorld';
 
-      // When
-      prismaMock.comment.findFirst.mockResolvedValue(null);
-
       // Then
       expect(deleteComment(id, username)).rejects.toThrowError();
     });
   });
 
   describe('favoriteArticle', () => {
-    test('should return the favorited article', async () => {
+    test.only('should return the favorited article', async () => {
       // Given
-      const slug = 'How-to-train-your-dragon';
-      const username = 'RealWorld';
+      const user = apiTestData![0];
+      const article = user.articles[0];
 
-      const mockedUserResponse = {
-        id: 123,
-        username: 'RealWorld',
-        email: 'realworld@me',
-        password: '1234',
-        bio: null,
-        image: null,
-        token: '',
-      };
-
-      const mockedArticleResponse = {
-        id: 123,
-        slug: 'How-to-train-your-dragon',
-        title: 'How to train your dragon',
-        description: '',
-        body: '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        authorId: 456,
-        tagList: [],
-        favoritedBy: [],
-        author: {
-          username: 'RealWorld',
-          bio: null,
-          image: null,
-          followedBy: [],
-        },
-      };
-
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(mockedUserResponse);
-      prismaMock.article.update.mockResolvedValue(mockedArticleResponse);
+      const { slug } = article;
+      const { username } = user;
 
       // Then
-      await expect(favoriteArticle(slug, username)).resolves.toHaveProperty('favoritesCount');
+      expect(favoriteArticle(slug, username)).resolves.toHaveProperty('favoritesCount');
     });
 
     test('should throw an error if no user is found', async () => {
       // Given
       const slug = 'how-to-train-your-dragon';
       const username = 'RealWorld';
-
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(null);
 
       // Then
       await expect(favoriteArticle(slug, username)).rejects.toThrowError();
@@ -77,42 +41,11 @@ describe('ArticleService', () => {
   });
   describe('unfavoriteArticle', () => {
     test('should return the unfavorited article', async () => {
-      // Given
-      const slug = 'How-to-train-your-dragon';
-      const username = 'RealWorld';
+      const user = apiTestData![0];
+      const article = user.articles[0];
 
-      const mockedUserResponse = {
-        id: 123,
-        username: 'RealWorld',
-        email: 'realworld@me',
-        password: '1234',
-        bio: null,
-        image: null,
-        token: '',
-      };
-
-      const mockedArticleResponse = {
-        id: 123,
-        slug: 'How-to-train-your-dragon',
-        title: 'How to train your dragon',
-        description: '',
-        body: '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        authorId: 456,
-        tagList: [],
-        favoritedBy: [],
-        author: {
-          username: 'RealWorld',
-          bio: null,
-          image: null,
-          followedBy: [],
-        },
-      };
-
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(mockedUserResponse);
-      prismaMock.article.update.mockResolvedValue(mockedArticleResponse);
+      const { slug } = article;
+      const { username } = user;
 
       // Then
       await expect(unfavoriteArticle(slug, username)).resolves.toHaveProperty('favoritesCount');
@@ -120,11 +53,11 @@ describe('ArticleService', () => {
 
     test('should throw an error if no user is found', async () => {
       // Given
-      const slug = 'how-to-train-your-dragon';
-      const username = 'RealWorld';
+      const user = apiTestData![0];
+      const article = user.articles[0];
 
-      // When
-      prismaMock.user.findUnique.mockResolvedValue(null);
+      const { slug } = article;
+      const { username } = user;
 
       // Then
       await expect(unfavoriteArticle(slug, username)).rejects.toThrowError();

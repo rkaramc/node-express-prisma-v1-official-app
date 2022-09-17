@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 import { RegisterInput } from '../models/register-input.model';
 import prisma from '../../prisma/prisma-client';
 import HttpException from '../models/http-exception.model';
