@@ -20,3 +20,5 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 .history/*
+tests/db/api-test.sqlite
+tests/db/api-test.sqlite-journal
