@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Node.js, Express.js & Prisma RealWorld official app",
   "main": "index.js",
+  "prisma": {
+    "seed": "ts-node-esm ./tests/db/seed-test-data.ts"
+  },
   "scripts": {
     "postinstall": "tsc",
     "test": "jest -i",
