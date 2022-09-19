@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import { PrismaClient } from '@prisma/client';
 import slugify from 'slugify';
 
@@ -7,6 +8,7 @@ export async function createTestUser(num: number) {
   const username = `realworld${num}`;
   const email = `realworld${num}@me`;
   const password = `realworld${num}`;
+  const hashedPassword = await bcrypt.hash(password, 10);
   const article1 = { title: `Article 1 by ${username}`, description: '', body: '' };
   const article2 = { title: `Article 2 by ${username}`, description: '', body: '' };
 
@@ -16,7 +18,7 @@ export async function createTestUser(num: number) {
     create: {
       username,
       email,
-      password,
+      password: hashedPassword,
       articles: {
         connectOrCreate: [
           {
